@@ -103,6 +103,10 @@ class Commands
                                 "chat_id"=>$chat_id,
                                 "message_id"=>$reply_message['message_id']
                             ]);
+                            $bot->apiRequest("DeleteMessage",[
+                                "chat_id"=>$chat_id,
+                                "message_id"=>$message['message_id']
+                            ]);
                         }
 
                     }elseif(preg_match('/^(\/|!)([Ss]ettings)$/',$text)){
