@@ -239,7 +239,7 @@ class Commands
             }
         }else{
             if(isset($message['new_chat_members'])){
-                if($message['new_chat_members']['username'] == env("BOT_USERNAME")){
+                if(@$message['new_chat_members']['username'] == env("BOT_USERNAME")){
                     if($message['from']['id'] != env("BOT_ADMIN")){
                         $bot->apiRequest("leaveChat",[
                             "chat_id"=>$chat_id
