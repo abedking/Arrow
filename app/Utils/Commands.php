@@ -78,7 +78,13 @@ class Commands
                     ]);
                 }
 
-            }else{
+            }elseif(preg_match('/^(\/|!)([Hh]ash) (.*)/s',$text,$match)){
+                $bot->apiRequest("sendMessage",[
+                    "chat_id"=>$chat_id,
+                    "text"=>hash("sha256",$match[3])
+                ]);
+            }
+            else{
                 $member = $bot->apiRequest("getChatMember",[
                     "chat_id"=>$chat_id,
                     "user_id"=>$message['from']['id']
