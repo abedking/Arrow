@@ -25,7 +25,7 @@ class Settings extends Model
         "audio",
         "video",
         "contact",
-        "id"
+        "groups_id"
     ];
 
     public function groups()
