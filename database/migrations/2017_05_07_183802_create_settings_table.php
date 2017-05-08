@@ -24,7 +24,7 @@ class CreateSettingsTable extends Migration
             $table->integer("audio");
             $table->integer("video");
             $table->integer("contact");
-            $table->foreign('groups_id')->references('id')->on('groups');
+            $table->integer("groups_id")->unsigned();
 
         });
     }
