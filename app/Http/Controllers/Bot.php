@@ -11,7 +11,7 @@ class Bot extends Controller
     {
         if($request->isJson()){
             $content = json_decode($request->getContent(), true);
-            $bot = new \App\Bot();
+            $bot = new \App\Arrow\Bot();
             $bot->kernel($content);
         }
     }
