@@ -166,6 +166,11 @@ class OnCallback
                 "callback_query_id"=>$callback['id'],
                 "text"=>$message
             ]);
+
+            $bot->apiRequest("sendMessage",[
+                "chat_id"=>$chat_id,
+                "text"=>$message
+            ]);
         }else{
             $bot->apiRequest("answerCallbackQuery",[
                 "callback_query_id"=>$callback['id'],
