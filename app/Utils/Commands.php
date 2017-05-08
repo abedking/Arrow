@@ -46,7 +46,7 @@ class Commands
             }elseif(preg_match('/^(\/|!)([Rr]em)$/',$text)){
                 $gp = Groups::where("chat_id", $chat_id);
                 if($gp->count() != 0){
-                    Groups::with("settings")->delete();
+                    Groups::with("settings")->where("chat_id", $chat_id)->delete();
                     $bot->apiRequest("sendMessage",[
                         "chat_id"=>$chat_id,
                         "text"=>"<b>Group</b> ".$chat_id." <b>Removed From DataBase</b>",
