@@ -71,6 +71,12 @@ class Commands
                         "text"=>"<b>Name : </b>".$reply_message['from']['first_name']."\n<b>ID : </b><code>".$reply_message['from']['id']."</code>",
                         "parse_mode"=>"html"
                     ]);
+                }else{
+                    $bot->apiRequest("sendMessage",[
+                        "chat_id"=>$chat_id,
+                        "text"=>"<b>Name : </b>".$message['from']['first_name']."\n<b>ID : </b><code>".$message['from']['id']."</code>",
+                        "parse_mode"=>"html"
+                    ]);
                 }
 
             }else{
