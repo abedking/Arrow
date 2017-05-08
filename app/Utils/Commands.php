@@ -13,36 +13,55 @@ class Commands
 
         $bot = new Bot();
 
-        if (preg_match('/^\/([Aa]dd)$/', $text) && $message['from']['id'] == env("BOT_ADMIN")) {
-            if (Groups::where("chat_id", $chat_id)->count() == 0) {
-                $id = Groups::create(["chat_id" => $chat_id])->id;
-                $group = Groups::find($id);
-                $group->settings()->save(new Settings([
-                    "link" => 1,
-                    "photo" => 1,
-                    "voice" => 1,
-                    "username" => 1,
-                    "text" => 1,
-                    "document" => 1,
-                    "sticker" => 1,
-                    "audio" => 1,
-                    "video" => 1,
-                    "contact" => 1
-                ]));
 
-                $bot->apiRequest("sendMessage",[
-                    "chat_id"=>$chat_id,
-                    "text"=>"<b>Group</b> " . $chat_id . " <b>Added</b>",
-                    "parse_mode" =>"html"
-                ]);
-            }else{
-                $bot->apiRequest("sendMessage",[
-                    "chat_id"=>$chat_id,
-                    "text"=>"<b>Group Already Added</b>",
-                    "parse_mode"=>"html"
-                ]);
+        if($message['from']['id'] == env("BOT_ADMIN")){
+            if (preg_match('/^\/([Aa]dd)$/', $text)) {
+                if (Groups::where("chat_id", $chat_id)->count() == 0) {
+                    $id = Groups::create(["chat_id" => $chat_id])->id;
+                    $group = Groups::find($id);
+                    $group->settings()->save(new Settings([
+                        "link" => 1,
+                        "photo" => 1,
+                        "voice" => 1,
+                        "username" => 1,
+                        "text" => 1,
+                        "document" => 1,
+                        "sticker" => 1,
+                        "audio" => 1,
+                        "video" => 1,
+                        "contact" => 1
+                    ]));
+                    $bot->apiRequest("sendMessage",[
+                        "chat_id"=>$chat_id,
+                        "text"=>"<b>Group</b> " . $chat_id . " <b>Added</b>",
+                        "parse_mode" =>"html"
+                    ]);
+                }else{
+                    $bot->apiRequest("sendMessage",[
+                        "chat_id"=>$chat_id,
+                        "text"=>"<b>Group Already Added</b>",
+                        "parse_mode"=>"html"
+                    ]);
+                }
+            }elseif(preg_match('/^\/([Rr]em)$/',$text)){
+                $gp = Groups::where("chat_id", $chat_id);
+                if($gp->count() != 0){
+                    Groups::with("settings")->delete();
+                    $bot->apiRequest("sendMessage",[
+                        "chat_id"=>$chat_id,
+                        "text"=>"<b>Group</b> ".$chat_id." <b>Removed From DataBase</b>",
+                        "parse_mode"=>"html"
+                    ]);
+                }else{
+                    $bot->apiRequest("sendMessage",[
+                        "chat_id"=>$chat_id,
+                        "text"=>"<b>Group Not Added</b>",
+                        "parse_mode"=>"html"
+                    ]);
+                }
             }
-        }elseif(preg_match('/^\/([Ii][Dd])$/',$text)){
+        }
+        if(preg_match('/^\/([Ii][Dd])$/',$text)){
             if(isset($message['reply_to_message'])){
                 $reply_message = $message['reply_to_message'];
                 $bot->apiRequest("sendMessage",[
