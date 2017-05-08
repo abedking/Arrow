@@ -20,7 +20,7 @@ class Groups extends Model
 
     public function settings()
     {
-        return $this->hasOne(Settings::class, "id");
+        return $this->hasOne(Settings::class);
     }
 
 
