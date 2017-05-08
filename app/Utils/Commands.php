@@ -61,8 +61,7 @@ class Commands
                 }
             }
         }
-        iF(Groups::where("chat_id", $chat_id)->count() == 1)
-        {
+        if(Groups::where("chat_id", $chat_id)->count() == 1){
             if(preg_match('/^(\/|!)([Ii][Dd])$/',$text)){
                 if(isset($message['reply_to_message'])){
                     $reply_message = $message['reply_to_message'];
