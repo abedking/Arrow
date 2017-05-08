@@ -15,7 +15,7 @@ class Commands
 
 
         if($message['from']['id'] == env("BOT_ADMIN")){
-            if (preg_match('/^\/([Aa]dd)$/', $text)) {
+            if (preg_match('/^(\/|!)([Aa]dd)$/', $text)) {
                 if (Groups::where("chat_id", $chat_id)->count() == 0) {
                     $id = Groups::create(["chat_id" => $chat_id])->id;
                     $group = Groups::find($id);
@@ -43,7 +43,7 @@ class Commands
                         "parse_mode"=>"html"
                     ]);
                 }
-            }elseif(preg_match('/^\/([Rr]em)$/',$text)){
+            }elseif(preg_match('/^(\/|!)([Rr]em)$/',$text)){
                 $gp = Groups::where("chat_id", $chat_id);
                 if($gp->count() != 0){
                     Groups::with("settings")->delete();
@@ -61,7 +61,7 @@ class Commands
                 }
             }
         }
-        if(preg_match('/^\/([Ii][Dd])$/',$text)){
+        if(preg_match('/^(\/|!)([Ii][Dd])$/',$text)){
             if(isset($message['reply_to_message'])){
                 $reply_message = $message['reply_to_message'];
                 $bot->apiRequest("sendMessage",[
@@ -77,7 +77,7 @@ class Commands
                 "user_id"=>$message['from']['id']
             ]);
             if($member['status'] == "creator" || $member['status'] == "administrator"){
-                if(preg_match('/^\/([Bb]an)$/',$text) && isset($message['reply_to_message'])){
+                if(preg_match('/^(\/|!)([Bb]an)$/',$text) && isset($message['reply_to_message'])){
                     $reply_message = $message['reply_to_message'];
                     $bot->apiRequest("kickChatMember",[
                         "chat_id"=>$chat_id,
@@ -88,7 +88,7 @@ class Commands
                         "text"=>"<b>".$reply_message['from']['id']."</b> kicked ! :D",
                         "parse_mode"=>"html"
                     ]);
-                }elseif(preg_match('/^\/([Ss]ettings)$/',$text)){
+                }elseif(preg_match('/^(\/|!)([Ss]ettings)$/',$text)){
                     $group = Groups::with("settings")->where("chat_id", $chat_id)->get();
                     $setting = null;
                     $settings = $group[0]->settings;
