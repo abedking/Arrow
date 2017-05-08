@@ -51,7 +51,7 @@ class Commands
                 $gp = Groups::where("chat_id", $chat_id);
                 if($gp->count() == 1){
                     $gp->delete();
-                    Settings::where("id", $gp->first()->id)->delete();
+                    $gp->settings->delete();
                     $bot->apiRequest("sendMessage",[
                         "chat_id"=>$chat_id,
                         "text"=>"<b>Group</b> ".$chat_id." <b>Removed From DataBase</b>",
