@@ -96,6 +96,15 @@ class Commands
                             "text"=>"<b>".$reply_message['from']['id']."</b> kicked ! :D",
                             "parse_mode"=>"html"
                         ]);
+                    }elseif(preg_match('/^(\/|!)([Dd]el)/',$text)){
+                        if(isset($message['reply_to_message'])){
+                            $reply_message = $message['reply_to_message'];
+                            $bot->apiRequest("DeleteMessage",[
+                                "chat_id"=>$chat_id,
+                                "message_id"=>$reply_message['message_id']
+                            ]);
+                        }
+
                     }elseif(preg_match('/^(\/|!)([Ss]ettings)$/',$text)){
                         $group = Groups::with("settings")->where("chat_id", $chat_id)->get();
                         $setting = null;
