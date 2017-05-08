@@ -16,7 +16,7 @@ class OnMessage
         }else{
             $bot->apiRequest("sendMessage",[
                 "chat_id"=>$updates['chat']['id'],
-                "text"=>"<b>Admin</b> : @negative\n<b>Support Group</b> : https://t.me/joinchat/AAAAAESEC_cBgp1VtYErHA",
+                "text"=>"<b>Admin</b> : @negative\n<b>Support Group</b> : https://t.me/joinchat/AAAAAESEC_cBgp1VtYErHA\n\n@Cruel_Team",
                 "parse_mode"=>"html"
             ]);
         }
