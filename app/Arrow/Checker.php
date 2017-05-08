@@ -48,6 +48,13 @@ class Checker
                             "chat_id"=>$message['chat']['id'],
                             "message_id"=>$message['message_id']
                         ]);
+                    }elseif($settings->link == 0){
+                        if(preg_match('/([Tt]\.me|[Tt]elegram\.me)/s',$message['photo']['caption'])){
+                            $bot->apiRequest("DeleteMessage",[
+                                "chat_id"=>$message['chat']['id'],
+                                "message_id"=>$message['message_id']
+                            ]);
+                        }
                     }
                 }elseif(isset($message['voice'])){
                     if($settings->voice == 0){
