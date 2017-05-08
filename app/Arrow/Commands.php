@@ -49,7 +49,7 @@ class Commands
                 }
             }elseif(preg_match('/^(\/|!)([Rr]em)$/',$text)){
                 $gp = Groups::where("chat_id", $chat_id);
-                if($gp->count() != 0){
+                if($gp->count() == 1){
                     $gp->delete();
                     Settings::where("id", $gp->first()->id)->delete();
                     $bot->apiRequest("sendMessage",[
