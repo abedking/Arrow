@@ -24,7 +24,7 @@ class CreateSettingsTable extends Migration
             $table->integer("audio");
             $table->integer("video");
             $table->integer("contact");
-            $table->increments("id");
+            //$table->increments("id");
 
         });
     }
